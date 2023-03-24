@@ -1,0 +1,42 @@
+class Solution:
+    def minSideJumps(self, obstacles: List[int]) -> int:
+        def solve(self,arr,n,i,lane):
+            if i==n-1:
+                return 0
+            one,two,three=10**20,10**20,10**20
+            if lane==2:
+                if arr[i+1]!=2:
+                    two=solve(self,arr,n,i+1,2)
+                else:
+                    if arr[i]==1:
+                        three=1+solve(self,arr,n,i,3)
+                    elif arr[i]==3:
+                        one=1+solve(self,arr,n,i,1)
+                    else:
+                        three=1+solve(self,arr,n,i,3)
+                        one=1+solve(self,arr,n,i,1)
+            elif lane==3:
+                if arr[i+1]!=3:
+                    three=solve(self,arr,n,i+1,3)
+                else:
+                    if arr[i]==1:
+                        two=1+solve(self,arr,n,i,2)
+                    elif arr[i]==2:
+                        one=1+solve(self,arr,n,i,1)
+                    else:
+                        two=1+solve(self,arr,n,i,2)
+                        one=1+solve(self,arr,n,i,1)
+            else:
+                if arr[i+1]!=1:
+                    one=solve(self,arr,n,i+1,1)
+                else:
+                    if arr[i]==3:
+                        two=1+solve(self,arr,n,i,2)
+                    elif arr[i]==2:
+                        three=1+solve(self,arr,n,i,3)
+                    else:
+                        two=1+solve(self,arr,n,i,2)
+                        three=1+solve(self,arr,n,i,3)
+            return min(one,min(two,three))
+        n=len(obstacles)
+        return solve(self,obstacles,n,0,2)
